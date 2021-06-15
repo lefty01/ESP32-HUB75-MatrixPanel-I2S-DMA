@@ -38,7 +38,7 @@
 #endif
 
 #ifndef MATRIX_HEIGHT
- #define MATRIX_HEIGHT               32   // CHANGE THIS VALUE to 64 IF USING 64px HIGH panel(s) with E PIN
+ #define MATRIX_HEIGHT               64   // CHANGE THIS VALUE to 64 IF USING 64px HIGH panel(s) with E PIN
 #endif
 
 #ifndef CHAIN_LENGTH
@@ -59,7 +59,7 @@
 #define B_PIN_DEFAULT   19
 #define C_PIN_DEFAULT   5
 #define D_PIN_DEFAULT   17
-#define E_PIN_DEFAULT   -1 // IMPORTANT: Change to a valid pin if using a 64x64px panel.
+#define E_PIN_DEFAULT   32 // IMPORTANT: Change to a valid pin if using a 64x64px panel.
           
 #define LAT_PIN_DEFAULT 4
 #define OE_PIN_DEFAULT  15
@@ -149,15 +149,6 @@
     #error "Pixel color depth bits cannot be greater than 8."
 #elif PIXEL_COLOR_DEPTH_BITS < 2 
     #error "Pixel color depth bits cannot be less than 2."
-#endif
-
-/* This library is designed to take an 8 bit / 1 byt value (0-255) for each R G B colour sub-pixel. 
- * The PIXEL_COLOR_DEPTH_BITS should always be '8' as a result.
- * However, if the library is to be used with lower colour depth (i.e. 6 bit colour), then we need to ensure the 8-bit value passed to the colour masking
- * is adjusted accordingly to ensure the LSB's are shifted left to MSB, by the difference. Otherwise the colours will be all screwed up.
- */
-#if PIXEL_COLOR_DEPTH_BITS != 8
-static constexpr uint8_t const MASK_OFFSET = 8-PIXEL_COLOR_DEPTH_BITS;
 #endif
 
 /***************************************************************************************/
@@ -262,13 +253,12 @@ struct  HUB75_I2S_CFG {
   
   /**
    *  I2S clock phase
-   *  0 - data lines are clocked with negative edge
+   *  0 (default) - data lines are clocked with negative edge
    *  Clk  /¯\_/¯\_/
    *  LAT  __/¯¯¯\__
    *  EO   ¯¯¯¯¯¯\___
    *
-   *  1 - data lines are clocked with positive edge (default now as of 10 June 2021)
-   *  https://github.com/mrfaptastic/ESP32-HUB75-MatrixPanel-I2S-DMA/issues/130
+   *  1 - data lines are clocked with positive edge
    *  Clk  \_/¯\_/¯\
    *  LAT  __/¯¯¯\__
    *  EO   ¯¯¯¯¯¯\__
@@ -292,7 +282,7 @@ struct  HUB75_I2S_CFG {
     bool _dbuff = false,
     clk_speed _i2sspeed = HZ_10M,
     uint8_t _latblk = 1,
-    bool _clockphase = true,
+    bool _clockphase = false,
     uint8_t _min_refresh_rate = 85
   ) : mx_width(_w),
       mx_height(_h),
