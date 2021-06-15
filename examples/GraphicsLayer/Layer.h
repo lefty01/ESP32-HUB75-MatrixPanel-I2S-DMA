@@ -13,7 +13,7 @@
 /* Use GFX_Root (https://github.com/mrfaptastic/GFX_Root) instead of 
  * Adafruit_GFX library. No real benefit unless you don't want Bus_IO & Wire.h library dependencies. 
  */
-#define USE_GFX_ROOT 1
+//#define USE_GFX_ROOT 1
 
 
 #ifdef USE_GFX_ROOT
@@ -22,14 +22,14 @@
 	#include "Adafruit_GFX.h" // Adafruit class with all the other stuff
 #endif	
 
-#include <FastLed.h>
+#include <FastLED.h>
 #include <ESP32-HUB75-MatrixPanel-I2S-DMA.h>
 
 /* 
  * Set the width and height of the layer buffers. This should match exactly that of your output display, or virtual display.
  */
-#define LAYER_WIDTH 	  64
-#define LAYER_HEIGHT  	32
+#define LAYER_WIDTH 	64
+#define LAYER_HEIGHT  	64
 
 
 #define HALF_WHITE_COLOUR 0x8410
@@ -55,7 +55,11 @@ class Layer : public Adafruit_GFX
 		// Static allocation of memory for layer
 		//CRGB pixels[LAYER_WIDTH][LAYER_HEIGHT] = {{0}};
 
+#ifdef USE_GFX_ROOT
 		Layer(MatrixPanel_I2S_DMA &disp) : GFX (LAYER_WIDTH, LAYER_HEIGHT) {
+#else
+		Layer(MatrixPanel_I2S_DMA &disp) : Adafruit_GFX (LAYER_WIDTH, LAYER_HEIGHT) {
+#endif
 			matrix = &disp;
 		}
 
