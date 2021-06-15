@@ -66,8 +66,7 @@
  * as part of the begin(...) function.
  */
 // Default pin mapping for ESP32-S2 and ESP32-S3
-#ifdef ESP32_SXXX 
- 
+#ifdef ESP32_SXXX
     #define R1_PIN_DEFAULT 45
     #define G1_PIN_DEFAULT 42
     #define B1_PIN_DEFAULT 41
