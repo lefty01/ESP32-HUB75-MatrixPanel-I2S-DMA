@@ -282,8 +282,8 @@ struct  HUB75_I2S_CFG {
     shift_driver _drv = SHIFTREG,
     bool _dbuff = false,
     clk_speed _i2sspeed = HZ_10M,
-    uint8_t _latblk = 1,
-    bool _clockphase = false,
+    uint8_t _latblk = 1, // 4 ??
+    bool _clockphase = false, // true ??
     uint8_t _min_refresh_rate = 85
   ) : mx_width(_w),
       mx_height(_h),
