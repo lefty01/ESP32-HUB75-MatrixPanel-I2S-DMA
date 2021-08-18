@@ -284,7 +284,7 @@ struct  HUB75_I2S_CFG {
     clk_speed _i2sspeed = HZ_10M,
     uint8_t _latblk = 1, // 4 ??
     bool _clockphase = false, // true ??
-    uint8_t _min_refresh_rate = 85
+uint8_t _min_refresh_rate = 85
   ) : mx_width(_w),
       mx_height(_h),
       chain_length(_chain),
