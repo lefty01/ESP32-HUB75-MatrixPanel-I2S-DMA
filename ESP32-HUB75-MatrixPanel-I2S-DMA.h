@@ -315,8 +315,8 @@ struct  HUB75_I2S_CFG {
     bool _dbuff = false,
     clk_speed _i2sspeed = HZ_10M,
 
-    uint8_t _latblk = 1, // 4 ??
-    bool _clockphase = false, // true ??
+    uint8_t _latblk = 1, // Anything > 1 seems to cause artefacts on ICS panels
+    bool _clockphase = false,
     uint8_t _min_refresh_rate = 85
 
   ) : mx_width(_w),
