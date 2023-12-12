@@ -1,14 +1,14 @@
 // How to use this library with a FM6126 panel, thanks goes to:
 // https://github.com/hzeller/rpi-rgb-led-matrix/issues/746
 
-/*
-// IDF
+#ifdef IDF_BUILD
 #include <stdio.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <driver/gpio.h>
 #include "sdkconfig.h"
-*/
+#endif
+
 #include <Arduino.h>
 #include "xtensa/core-macros.h"
 #ifdef VIRTUAL_PANE
@@ -116,7 +116,7 @@ void setup(){
   chain->begin();
   chain->setBrightness8(255);
   // create VirtualDisplay object based on our newly created dma_display object
-  matrix = new VirtualMatrixPanel((*chain), NUM_ROWS, NUM_COLS, PANEL_WIDTH, PANEL_HEIGHT, SERPENT, TOPDOWN);
+  matrix = new VirtualMatrixPanel((*chain), NUM_ROWS, NUM_COLS, PANEL_WIDTH, PANEL_HEIGHT, CHAIN_TOP_LEFT_DOWN);
 #endif
 
   ledbuff = (CRGB *)malloc(NUM_LEDS * sizeof(CRGB));  // allocate buffer for some tests
@@ -241,7 +241,7 @@ void loop(){
   delay(PATTERN_DELAY);
 //
 
-#ifdef TEST_FASTLINES
+#ifndef NO_FAST_FUNCTIONS
   // Fillrate for fillRect() function
   Serial.print("Estimating fullscreen fillrate with fillRect() time: ");
   t1 = micros();
@@ -293,7 +293,7 @@ void loop(){
   Serial.printf("%lu us, %u ticks\n", t2, ccount1);
   delay(PATTERN_DELAY);
 
-#ifdef TEST_FASTLINES
+#ifndef NO_FAST_FUNCTIONS
   Serial.println("Estimating V-lines with vlineDMA(): ");  //
   matrix->fillScreen(0);
   color2 = random8();
@@ -347,7 +347,7 @@ void loop(){
   Serial.printf("%lu us, %u ticks\n", t2, ccount1);
   delay(PATTERN_DELAY);
 
-#ifdef TEST_FASTLINES
+#ifndef NO_FAST_FUNCTIONS
   Serial.println("Estimating H-lines with hlineDMA(): ");
   matrix->fillScreen(0);
   color2 = random8();
