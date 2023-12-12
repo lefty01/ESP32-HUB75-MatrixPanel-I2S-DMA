@@ -45,7 +45,7 @@
 #endif
 
 #ifndef MATRIX_HEIGHT
-#define MATRIX_HEIGHT 32 // CHANGE THIS VALUE to 64 IF USING 64px HIGH panel(s) with E PIN
+#define MATRIX_HEIGHT 64 // CHANGE THIS VALUE to 64 IF USING 64px HIGH panel(s) with E PIN
 #endif
 
 #ifndef CHAIN_LENGTH
